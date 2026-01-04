@@ -7,7 +7,9 @@ type GetOptionsFn = (req: NextApiRequest) => {
    * unique_prop can be the user id or request IP or something unique
    * */
   key: string;
+  /* The number of requests that can be made within a time window **/
   maxTries: number;
+  /** The expiry time of a time window */
   expiresAt: Date;
 };
 
@@ -23,7 +25,7 @@ setInterval(() => {
       cache.delete(key);
     }
   }
-}, 10000);
+}, 60000);
 
 export const applyRateLimiter = (
   req: NextApiRequest,
