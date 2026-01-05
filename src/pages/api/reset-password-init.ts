@@ -9,7 +9,7 @@ export default function handleRequestResetPassword(req: NextApiRequest, res: Nex
     });
   }
 
-  if (!req.body.email) {
+  if (!req.body.email || typeof req.body.email != "string") {
     return res.status(400).json({
       error: { message: "'email' is required" },
     });
@@ -21,7 +21,7 @@ export default function handleRequestResetPassword(req: NextApiRequest, res: Nex
 
     return {
       expiresAt: inFiveSeconds,
-      key: `post.reset-password.${req.body.email}`,
+      key: `post.reset-password.${req.body.email.toLowerCase()}`,
       maxTries: 1,
     };
   };
